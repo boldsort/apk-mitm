@@ -28,7 +28,12 @@ export default function patchApk({ inputPath, outputPath, tmpDir, apktool, wait 
         const result = await modifyManifest(
           path.join(decodeDir, 'AndroidManifest.xml'),
         )
-        nscName = result.nscName
+
+        // Just because the manifest specifies a name for the NSC, it doesn't
+        // have to be inside the `res/xml` directory. It might be specified as
+        // an `<item type="xml">` tag within `res/values`.
+        const nscPath = path.join(decodeDir, `res/xml/${result.nscName}.xml`)
+        if (await fs.exists(nscPath)) nscName = result.nscName
 
         context.usesAppBundle = result.usesAppBundle
       },

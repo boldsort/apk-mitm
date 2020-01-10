@@ -11,7 +11,7 @@ export default async function modifyManifest(path: string) {
 
   application._attributes['android:debuggable'] = 'true'
 
-  let nscName = 'network_security_config'
+  let nscName = 'apkmitm_network_security_config'
   const nscReference: string = application._attributes['android:networkSecurityConfig']
   if (nscReference && nscReference.startsWith('@xml/')) {
     nscName = nscReference.slice(5)
